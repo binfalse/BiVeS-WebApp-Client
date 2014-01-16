@@ -19,10 +19,12 @@ public class BivesResult implements Serializable {
 	private String compHierarchyGraphml;
 	private String xmlDiff;
 	
+	private String error;
+	
 	public BivesResult(Map<String, List<String>> documentType,
 			Map<String, BivesModelMeta> meta, String crnGraphml, String crnDot,
 			String reportMd, String reportHtml, String compHierarchyDot,
-			String compHierarchyGraphml, String xmlDiff) {
+			String compHierarchyGraphml, String xmlDiff, String error) {
 		super();
 		this.documentType = documentType;
 		this.meta = meta;
@@ -33,6 +35,7 @@ public class BivesResult implements Serializable {
 		this.compHierarchyDot = compHierarchyDot;
 		this.compHierarchyGraphml = compHierarchyGraphml;
 		this.xmlDiff = xmlDiff;
+		this.error = error;
 	}
 
 	public BivesResult() {
@@ -45,6 +48,7 @@ public class BivesResult implements Serializable {
 		this.compHierarchyDot = null;
 		this.compHierarchyGraphml = null;
 		this.xmlDiff = null;
+		this.error = null;
 	}
 
 	public Map<String, List<String>> getDocumentType() {
@@ -117,6 +121,14 @@ public class BivesResult implements Serializable {
 
 	public void setXmlDiff(String xmlDiff) {
 		this.xmlDiff = xmlDiff;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
 	}
 
 }
