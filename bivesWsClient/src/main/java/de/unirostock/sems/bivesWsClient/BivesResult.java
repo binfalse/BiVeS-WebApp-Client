@@ -131,4 +131,14 @@ public class BivesResult implements Serializable {
 		this.error = error;
 	}
 
+	@Override
+	public String toString() {
+		return "BivesResult [documentType=" + documentType + ", meta=" + meta
+				+ ", crnGraphml=" + crnGraphml + ", crnDot=" + crnDot
+				+ ", reportMd=" + reportMd + ", reportHtml=" + reportHtml
+				+ ", compHierarchyDot=" + compHierarchyDot
+				+ ", compHierarchyGraphml=" + compHierarchyGraphml
+				+ ", xmlDiff=" + xmlDiff + ", error=" + error + "]";
+	}
+
 }

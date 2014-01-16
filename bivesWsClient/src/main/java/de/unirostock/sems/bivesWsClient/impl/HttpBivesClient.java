@@ -137,14 +137,15 @@ public class HttpBivesClient implements BivesWs {
 		}
 		
 		public String getErrorText() {
-			StringBuilder result = new StringBuilder();
-			
-			for( String line : error ) {
-				result.append(line);
-				result.append(", ");
-			}
-				
-			return result.substring(0, result.length()-2);
+//			StringBuilder result = new StringBuilder();
+//			
+//			for( String line : error ) {
+//				result.append(line);
+//				result.append(", ");
+//			}
+//				
+//			return result.substring(0, result.length()-2);
+			return error.toString();
 		}
 		
 		

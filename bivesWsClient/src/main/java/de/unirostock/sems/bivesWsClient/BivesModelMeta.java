@@ -77,4 +77,11 @@ public class BivesModelMeta implements Serializable {
 		this.sbmlVersion = sbmlVersion;
 	}
 
+	@Override
+	public String toString() {
+		return "BivesModelMeta [nodeStats=" + nodeStats + ", modelId="
+				+ modelId + ", modelName=" + modelName + ", sbmlLevel="
+				+ sbmlLevel + ", sbmlVersion=" + sbmlVersion + "]";
+	}
+
 }

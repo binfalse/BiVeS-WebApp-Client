@@ -57,6 +57,12 @@ public class BivesRequest {
 	public List<String> getCommands() {
 		return commands;
 	}
+
+	@Override
+	public String toString() {
+		return "BivesRequest [models=" + models + ", commands=" + commands
+				+ "]";
+	}
 	
 	
 }
