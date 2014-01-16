@@ -1,80 +1,122 @@
 package de.unirostock.sems.bivesWsClient;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-public class BivesResult {
+public class BivesResult implements Serializable {
 	
-	/*
-{
-  "reportMd" : "SBML Differences\n===================\n\n* Both documents have same Level/Version: *L2V4*\n\n",
-  "compHierarchyDot" : null,
-  "documentType" : {
-    "versionA" : [ "XML", "SBML" ],
-    "versionB" : [ "XML", "SBML" ]
-  },
-  "reportHtml" : "<h1>SBML Differences</h1><ul><li>Both documents have same Level/Version: <strong>L2V4</strong></li></ul>",
-  "compHierarchyGraphml" : null,
-  "crnGraphml" : "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<graphml>\n    <key attr.name=\"name\" attr.type=\"string\" for=\"node\" id=\"name\"/>\n    <key attr.name=\"node set\" attr.type=\"string\" for=\"node\" id=\"ns\">\n        <default>species</default>\n    </key>\n    <key attr.name=\"reversible\" attr.type=\"boolean\" for=\"node\" id=\"rev\">\n        <default>false</default>\n    </key>\n    <key attr.name=\"fast\" attr.type=\"boolean\" for=\"node\" id=\"fast\">\n        <default>false</default>\n    </key>\n    <key attr.name=\"version\" attr.type=\"int\" for=\"all\" id=\"vers\">\n        <default>0</default>\n    </key>\n    <key attr.name=\"modifier\" attr.type=\"string\" for=\"edge\" id=\"mod\">\n        <default>none</default>\n    </key>\n    <key attr.name=\"initial amount\" attr.type=\"double\" for=\"node\" id=\"init\">\n        <default>0</default>\n    </key>\n    <graph edgedefault=\"directed\" id=\"G\">\n        <node id=\"c1\">\n            <data key=\"vers\">0</data>\n            <data key=\"name\">compartment</data>\n            <graph edgedefault=\"directed\" id=\"G1\">\n                <node id=\"s5\">\n                    <data key=\"ns\">species</data>\n                    <data key=\"vers\">0</data>\n                    <data key=\"name\">free E3F</data>\n                </node>\n                <node id=\"s1\">\n                    <data key=\"ns\">species</data>\n                    <data key=\"vers\">0</data>\n                    <data key=\"name\">cycE/cdk2</data>\n                </node>\n                <node id=\"s2\">\n                    <data key=\"ns\">species</data>\n                    <data key=\"vers\">0</data>\n                    <data key=\"name\">RB-Phos</data>\n                </node>\n                <node id=\"s4\">\n                    <data key=\"ns\">species</data>\n                    <data key=\"vers\">0</data>\n                    <data key=\"name\">RB-Hypo</data>\n                </node>\n                <node id=\"s3\">\n                    <data key=\"ns\">species</data>\n                    <data key=\"vers\">0</data>\n                    <data key=\"name\">RB/E2F</data>\n                </node>\n                <node id=\"r2\">\n                    <data key=\"ns\">reaction</data>\n                    <data key=\"vers\">0</data>\n                    <data key=\"name\">r</data>\n                </node>\n                <node id=\"r1\">\n                    <data key=\"ns\">reaction</data>\n                    <data key=\"vers\">0</data>\n                    <data key=\"name\">s</data>\n                </node>\n            </graph>\n        </node>\n        <edge source=\"s3\" target=\"r2\">\n            <data key=\"mod\">none</data>\n            <data key=\"vers\">0</data>\n        </edge>\n        <edge source=\"r2\" target=\"s5\">\n            <data key=\"mod\">none</data>\n            <data key=\"vers\">0</data>\n        </edge>\n        <edge source=\"r2\" target=\"s2\">\n            <data key=\"mod\">none</data>\n            <data key=\"vers\">0</data>\n        </edge>\n        <edge source=\"s1\" target=\"r2\">\n            <data key=\"mod\">stimulator</data>\n            <data key=\"vers\">0</data>\n        </edge>\n        <edge source=\"s2\" target=\"r1\">\n            <data key=\"mod\">none</data>\n            <data key=\"vers\">0</data>\n        </edge>\n        <edge source=\"r1\" target=\"s4\">\n            <data key=\"mod\">none</data>\n            <data key=\"vers\">0</data>\n        </edge>\n    </graph>\n</graphml>\n",
-  "xmlDiff" : "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<bives type=\"fullDiff\">\n    <update/>\n    <delete/>\n    <insert/>\n    <move/>\n</bives>\n",
-  "crnDot" : "##Command to produce the pic: `neato -Tpng thisfile > thisfile.png`\n\ndigraph BiVeSexport {\n\tgraph [overlap=false];\n\tedge [len=1.3];\n\tnode [fontsize=11];\n\tsubgraph clusterc1 {\n\t\tlabel = \"compartment\";\n\t\tcolor=lightgrey;\n\t\ts5[label=\"free E3F\",shape=circle];\n\t\ts1[label=\"cycE/cdk2\",shape=circle];\n\t\ts2[label=\"RB-Phos\",shape=circle];\n\t\ts4[label=\"RB-Hypo\",shape=circle];\n\t\ts3[label=\"RB/E2F\",shape=circle];\n\t\tr2[label=\"r\",shape=diamond];\n\t\tr1[label=\"s\",shape=diamond];\n\t}\n\ts3->r2;\n\tr2->s5;\n\tr2->s2;\n\ts1->r2[style=dashed,arrowType=normal];\n\ts2->r1;\n\tr1->s4;\n\tlabel=\"Diff Graph created by BiVeS\";\n}",
-  "meta" : {
-    "versionA" : {
-      "nodeStats" : {
-        "reaction" : 2,
-        "model" : 1,
-        "listOfReactions" : 1,
-        "listOfReactants" : 2,
-        "species" : 5,
-        "sbml" : 1,
-        "listOfSpecies" : 1,
-        "listOfModifiers" : 1,
-        "listOfProducts" : 2,
-        "modifierSpeciesReference" : 1,
-        "listOfCompartments" : 1,
-        "speciesReference" : 5,
-        "compartment" : 1
-      },
-      "modelId" : null,
-      "sbmlLevel" : 2,
-      "modelName" : "TestModel_for_IB2013",
-      "sbmlVersion" : 4
-    },
-    "versionB" : {
-      "nodeStats" : {
-        "reaction" : 2,
-        "model" : 1,
-        "listOfReactions" : 1,
-        "listOfReactants" : 2,
-        "species" : 5,
-        "sbml" : 1,
-        "listOfSpecies" : 1,
-        "listOfModifiers" : 1,
-        "listOfProducts" : 2,
-        "modifierSpeciesReference" : 1,
-        "listOfCompartments" : 1,
-        "speciesReference" : 5,
-        "compartment" : 1
-      },
-      "modelId" : null,
-      "sbmlLevel" : 2,
-      "modelName" : "TestModel_for_IB2013",
-      "sbmlVersion" : 4
-    }
-  }
-}
-	
-	 */
+	private static final long serialVersionUID = -2807954477215637789L;
 	
 	private Map<String, List<String>> documentType;
+	private Map<String, BivesModelMeta> meta;
 	
-	 
+	private String crnGraphml;
 	private String crnDot;
 	private String reportMd;
 	private String reportHtml;
+	private String compHierarchyDot;
+	private String compHierarchyGraphml;
+	private String xmlDiff;
 	
+	public BivesResult(Map<String, List<String>> documentType,
+			Map<String, BivesModelMeta> meta, String crnGraphml, String crnDot,
+			String reportMd, String reportHtml, String compHierarchyDot,
+			String compHierarchyGraphml, String xmlDiff) {
+		super();
+		this.documentType = documentType;
+		this.meta = meta;
+		this.crnGraphml = crnGraphml;
+		this.crnDot = crnDot;
+		this.reportMd = reportMd;
+		this.reportHtml = reportHtml;
+		this.compHierarchyDot = compHierarchyDot;
+		this.compHierarchyGraphml = compHierarchyGraphml;
+		this.xmlDiff = xmlDiff;
+	}
+
 	public BivesResult() {
-		// TODO Auto-generated constructor stub
+		this.documentType = null;
+		this.meta = null;
+		this.crnGraphml = null;
+		this.crnDot = null;
+		this.reportMd = null;
+		this.reportHtml = null;
+		this.compHierarchyDot = null;
+		this.compHierarchyGraphml = null;
+		this.xmlDiff = null;
+	}
+
+	public Map<String, List<String>> getDocumentType() {
+		return documentType;
+	}
+
+	public void setDocumentType(Map<String, List<String>> documentType) {
+		this.documentType = documentType;
+	}
+
+	public Map<String, BivesModelMeta> getMeta() {
+		return meta;
+	}
+
+	public void setMeta(Map<String, BivesModelMeta> meta) {
+		this.meta = meta;
+	}
+
+	public String getCrnGraphml() {
+		return crnGraphml;
+	}
+
+	public void setCrnGraphml(String crnGraphml) {
+		this.crnGraphml = crnGraphml;
+	}
+
+	public String getCrnDot() {
+		return crnDot;
+	}
+
+	public void setCrnDot(String crnDot) {
+		this.crnDot = crnDot;
+	}
+
+	public String getReportMd() {
+		return reportMd;
+	}
+
+	public void setReportMd(String reportMd) {
+		this.reportMd = reportMd;
+	}
+
+	public String getReportHtml() {
+		return reportHtml;
+	}
+
+	public void setReportHtml(String reportHtml) {
+		this.reportHtml = reportHtml;
+	}
+
+	public String getCompHierarchyDot() {
+		return compHierarchyDot;
+	}
+
+	public void setCompHierarchyDot(String compHierarchyDot) {
+		this.compHierarchyDot = compHierarchyDot;
+	}
+
+	public String getCompHierarchyGraphml() {
+		return compHierarchyGraphml;
+	}
+
+	public void setCompHierarchyGraphml(String compHierarchyGraphml) {
+		this.compHierarchyGraphml = compHierarchyGraphml;
+	}
+
+	public String getXmlDiff() {
+		return xmlDiff;
+	}
+
+	public void setXmlDiff(String xmlDiff) {
+		this.xmlDiff = xmlDiff;
 	}
 
 }
