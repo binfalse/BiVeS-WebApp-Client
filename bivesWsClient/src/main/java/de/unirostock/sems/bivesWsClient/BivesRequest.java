@@ -50,4 +50,13 @@ public class BivesRequest {
 		models.put(id, model);
 	}
 	
+	public Map<String, String> getModels() {
+		return models;
+	}
+
+	public List<String> getCommands() {
+		return commands;
+	}
+	
+	
 }

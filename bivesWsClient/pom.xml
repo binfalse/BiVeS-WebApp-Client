@@ -44,7 +44,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>MorreClient</finalName>
+		<finalName>BivesWsClient</finalName>
 
 		<plugins>
 			<!-- Setting the Java Version -->
