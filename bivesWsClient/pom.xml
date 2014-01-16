@@ -1,25 +1,137 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>de.unirostock.sems</groupId>
-  <artifactId>bivesWsClient</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+	<groupId>de.unirostock.sems</groupId>
+	<artifactId>bivesWsClient</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
-  <name>bivesWsClient</name>
-  <url>http://maven.apache.org</url>
+	<name>bivesWsClient</name>
+	<url>http://sems.uni-rostock.de</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+	<organization>
+		<name>SEMS (Simulation Experiment Management for Systems Biology)</name>
+		<url>http://sems.uni-rostock.de</url>
+	</organization>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.sourceJavaVersion>1.7</project.build.sourceJavaVersion>
+		<project.build.destinationJavaVersion>1.7</project.build.destinationJavaVersion>
+	</properties>
+
+	<dependencies>
+		<!-- GSon and Http -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>MorreClient</finalName>
+
+		<plugins>
+			<!-- Setting the Java Version -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${project.build.sourceJavaVersion}</source>
+					<target>${project.build.destinationJavaVersion}</target>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+		<extensions>
+			<!-- enables ssh/scp support for maven deployment -->
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh</artifactId>
+				<version>1.0-beta-7</version>
+			</extension>
+		</extensions>
+
+	</build>
+
+	<profiles>
+		<!-- deployment profile -->
+		<profile>
+			<id>release</id>
+			<!-- build plugin configuration for the deploy -->
+			<!-- It is not necessary to include the sources and javadocs every time 
+				the project compiles -->
+			<build>
+				<plugins>
+					<!-- attach sources -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+
+						<configuration>
+							<attach>true</attach>
+						</configuration>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- attach javadoc -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<distributionManagement>
+		<downloadUrl>http://mvn.sems.uni-rostock.de</downloadUrl>
+		<snapshotRepository>
+			<uniqueVersion>true</uniqueVersion>
+			<id>sems-maven-repository</id>
+			<name>SEMS Maven Release Repository</name>
+			<url>scp://mvn.sems.uni-rostock.de:/home/stuff/web/mvn/snapshots/</url>
+			<layout>default</layout>
+		</snapshotRepository>
+
+		<repository>
+			<uniqueVersion>true</uniqueVersion>
+			<id>sems-maven-repository</id>
+			<name>Enterprise Systems Maven Repository</name>
+			<url>scp://mvn.sems.uni-rostock.de:/home/stuff/web/mvn/releases/</url>
+			<layout>default</layout>
+		</repository>
+	</distributionManagement>
 </project>
