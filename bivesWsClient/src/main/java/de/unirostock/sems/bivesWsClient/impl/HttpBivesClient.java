@@ -87,11 +87,9 @@ public class HttpBivesClient implements BivesWs {
 			stringResult = stringResultBuilder.toString();
 
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new BivesClientException("Protocol Exception while fetching content from the server.", e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new BivesClientException("IO Exception while fetching content from the server.", e);
 		}
 		
 		if( stringResult == null || stringResult.isEmpty() )
