@@ -3,11 +3,9 @@ package de.unirostock.sems.bivesWsClient.impl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-import java.text.MessageFormat;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -18,12 +16,17 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import de.unirostock.sems.bivesWsClient.BivesComparisonRequest;
+import de.unirostock.sems.bivesWsClient.BivesComparisonResponse;
 import de.unirostock.sems.bivesWsClient.BivesRequest;
-import de.unirostock.sems.bivesWsClient.BivesResult;
+import de.unirostock.sems.bivesWsClient.BivesResponse;
+import de.unirostock.sems.bivesWsClient.BivesSingleFileRequest;
+import de.unirostock.sems.bivesWsClient.BivesSingleFileResponse;
 import de.unirostock.sems.bivesWsClient.BivesWs;
 import de.unirostock.sems.bivesWsClient.exception.BivesClientException;
 import de.unirostock.sems.bivesWsClient.exception.BivesException;
@@ -32,15 +35,12 @@ public class HttpBivesClient implements BivesWs {
 
 	private static final String REQUEST_FIELD_FILES = "files";
 
-	private static final String REQUEST_FIELD_COMMANDS = "get";
+	private static final String REQUEST_FIELD_COMMANDS = "commands";
 
 	protected String baseUrl;
 
 	protected Gson gson;
 	protected HttpClient httpClient;
-	
-	private Type bivesResultType;
-	private Type bivesErrorResult;
 
 	public HttpBivesClient( String baseUrl ) {
 		this.baseUrl = baseUrl;
@@ -48,15 +48,15 @@ public class HttpBivesClient implements BivesWs {
 		// creates Framework instances
 		gson = new Gson();
 		httpClient = HttpClientBuilder.create().build();
-		
-		bivesResultType = new TypeToken<BivesResult>(){}.getType();
-		bivesErrorResult = new TypeToken<BivesErrorResult>(){}.getType();
 	}
+	
+	
+	
 
-	public BivesResult performRequest(BivesRequest request) throws BivesClientException, BivesException {
+	protected void performRequest(BivesRequest request, BivesResponse result) throws BivesClientException, BivesException {
 
-		if( request == null )
-			throw new IllegalArgumentException("The request Url should not be null!");
+		if( request == null || !request.isReady () )
+			throw new IllegalArgumentException("The request isn't valid.");
 
 		// generate the Request Parameter
 		Map<String, JsonElement> requestJson = new HashMap<String, JsonElement>();
@@ -70,6 +70,8 @@ public class HttpBivesClient implements BivesWs {
 		httpRequest.setEntity( new StringEntity(json, ContentType.APPLICATION_JSON) );
 
 		String stringResult = null;
+		
+		
 		
 		// Retrieving the Http Response
 		try {
@@ -95,58 +97,44 @@ public class HttpBivesClient implements BivesWs {
 		if( stringResult == null || stringResult.isEmpty() )
 			throw new BivesClientException("The result returned from the BiVeS Webservice is empty or null!");
 		
-		BivesResult result = null;
-		
-		// Marshall the response into java dataholder
-		try {
-			result = gson.fromJson(stringResult, bivesResultType);
-		} catch (JsonSyntaxException e1) {
-			
-			try {
-				BivesErrorResult errorResult = gson.fromJson(stringResult, bivesErrorResult);
-				
-				if( errorResult != null ) 
-					throw new BivesException( MessageFormat.format("The request produced multiple error: {0}", errorResult.getErrorText()), e1 );
-				else
-					throw new BivesException( "The result could not parsed normally, but the error message was null.", e1 );
-				
-			} catch (JsonSyntaxException e2) {
-				throw new BivesException("Not even the error message could be parsed", e2);
-			}
-		}
-
-		return result;
+		JsonParser parser = new JsonParser();
+    JsonObject obj = parser.parse(stringResult).getAsJsonObject ();
+    for (Entry<String, JsonElement> entry : obj.entrySet ())
+    {
+    	String key = entry.getKey ();
+    	if (key.equals ("error"))
+    	{
+    		JsonArray array = entry.getValue ().getAsJsonArray ();
+    		for (JsonElement arrayElement : array)
+    			result.addError (arrayElement.getAsString ());
+    		continue;
+    	}
+    	result.setResult (key, entry.getValue ().getAsString ());
+    }
 	}
-	
-	protected class BivesErrorResult {
-		private List<String> error;
 
-		public BivesErrorResult(List<String> error) {
-			super();
-			this.error = error;
-		}
+	@Override
+	public BivesSingleFileResponse performRequest (BivesSingleFileRequest request)
+		throws BivesClientException,
+			BivesException
+	{
+		BivesSingleFileResponse response = new BivesSingleFileResponse ();
+		
+		performRequest (request, response);
+		response.prostProcess ();
+		
+		return response;
+	}
 
-		public List<String> getError() {
-			return error;
-		}
-
-		public void setError(List<String> error) {
-			this.error = error;
-		}
-		
-		public String getErrorText() {
-//			StringBuilder result = new StringBuilder();
-//			
-//			for( String line : error ) {
-//				result.append(line);
-//				result.append(", ");
-//			}
-//				
-//			return result.substring(0, result.length()-2);
-			return error.toString();
-		}
-		
-		
+	@Override
+	public BivesComparisonResponse performRequest (BivesComparisonRequest request)
+		throws BivesClientException,
+			BivesException
+	{
+		BivesComparisonResponse response = new BivesComparisonResponse ();
+		performRequest (request, response);
+		response.prostProcess ();
+		return response;
 	}
 	
 }
