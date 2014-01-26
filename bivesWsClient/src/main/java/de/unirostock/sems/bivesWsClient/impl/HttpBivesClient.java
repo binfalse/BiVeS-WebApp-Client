@@ -31,34 +31,42 @@ import de.unirostock.sems.bivesWsClient.BivesWs;
 import de.unirostock.sems.bivesWsClient.exception.BivesClientException;
 import de.unirostock.sems.bivesWsClient.exception.BivesException;
 
+/**
+ * The Implementation of a BiVeS web service Client.
+ */
 public class HttpBivesClient implements BivesWs {
 
 	private static final String REQUEST_FIELD_FILES = "files";
-
 	private static final String REQUEST_FIELD_COMMANDS = "commands";
 
+	/** The base url. */
 	protected String baseUrl;
 
-	protected Gson gson;
-	protected HttpClient httpClient;
-
+	/**
+	 * The Constructor.
+	 *
+	 * @param baseUrl the URL to the BiVeS web service, e.g. <code>http://bives.sems.uni-rostock.de/</code>
+	 */
 	public HttpBivesClient( String baseUrl ) {
 		this.baseUrl = baseUrl;
-
-		// creates Framework instances
-		gson = new Gson();
-		httpClient = HttpClientBuilder.create().build();
 	}
-	
-	
-	
 
-	protected void performRequest(BivesRequest request, BivesResponse result) throws BivesClientException, BivesException {
+	/**
+	 * Performs the request.
+	 *
+	 * @param request the request for the BiVeS web service
+	 * @param result the result from the BiVeS web service
+	 * @throws BivesClientException the bives client exception
+	 * @throws BivesException the bives exception
+	 */
+	protected void performRequest(BivesRequest request, BivesResponse result) throws BivesClientException {
 
 		if( request == null || !request.isReady () )
 			throw new IllegalArgumentException("The request isn't valid.");
 
 		// generate the Request Parameter
+		HttpClient httpClient = HttpClientBuilder.create().build();
+		Gson gson = new Gson ();
 		Map<String, JsonElement> requestJson = new HashMap<String, JsonElement>();
 		requestJson.put( REQUEST_FIELD_FILES, gson.toJsonTree(request.getModels()) );
 		requestJson.put( REQUEST_FIELD_COMMANDS, gson.toJsonTree(request.getCommands()) );
@@ -113,6 +121,9 @@ public class HttpBivesClient implements BivesWs {
     }
 	}
 
+	/* (non-Javadoc)
+	 * @see de.unirostock.sems.bivesWsClient.BivesWs#performRequest(de.unirostock.sems.bivesWsClient.BivesSingleFileRequest)
+	 */
 	@Override
 	public BivesSingleFileResponse performRequest (BivesSingleFileRequest request)
 		throws BivesClientException,
@@ -121,11 +132,14 @@ public class HttpBivesClient implements BivesWs {
 		BivesSingleFileResponse response = new BivesSingleFileResponse ();
 		
 		performRequest (request, response);
-		response.prostProcess ();
+		response.postProcess ();
 		
 		return response;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.unirostock.sems.bivesWsClient.BivesWs#performRequest(de.unirostock.sems.bivesWsClient.BivesComparisonRequest)
+	 */
 	@Override
 	public BivesComparisonResponse performRequest (BivesComparisonRequest request)
 		throws BivesClientException,
@@ -133,7 +147,7 @@ public class HttpBivesClient implements BivesWs {
 	{
 		BivesComparisonResponse response = new BivesComparisonResponse ();
 		performRequest (request, response);
-		response.prostProcess ();
+		response.postProcess ();
 		return response;
 	}
 	

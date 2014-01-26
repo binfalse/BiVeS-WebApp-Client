@@ -12,9 +12,15 @@ import org.junit.runners.JUnit4;
 
 import de.unirostock.sems.bivesWsClient.impl.HttpBivesClient;
 
+/**
+ * The Class BivesWsTest to test the coded stuff.
+ */
 @RunWith(JUnit4.class)
 public class BivesWsTest {
 
+  /**
+   * Test if errors are caught correctly.
+   */
   @Test
   public void testError ()
   {
@@ -42,6 +48,9 @@ public class BivesWsTest {
   }
 
   
+	/**
+	 * Test what happens if server is broken.
+	 */
 	@Test
 	public void testBrokenServer () {
 		try
@@ -62,6 +71,9 @@ public class BivesWsTest {
 	}
 
   
+	/**
+	 * Test single file request.
+	 */
 	@Test
 	public void testSingleFile() {
 		try
@@ -97,6 +109,9 @@ public class BivesWsTest {
 	}
 
   
+	/**
+	 * Test comparison request.
+	 */
 	@Test
 	public void testComparison() {
 		try

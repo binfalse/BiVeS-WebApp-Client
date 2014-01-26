@@ -9,41 +9,58 @@ import java.util.List;
 
 
 /**
- * @author martin
+ * The Class BivesSingleFileResponse representing a response of a single-file-request sent to the BiVeS web service.
  *
+ * @author martin
  */
-public class BivesSingleFileResponse extends BivesResponse implements BivesSingleFileStatics
+public class BivesSingleFileResponse extends BivesResponse implements BivesSingleFileCommands
 {
 	private static final long	serialVersionUID	= -5594048578870894606L;
-	protected HashMap<String, String> meta;
-	protected HashMap<String, Integer> nodeStats;
-	protected List<String> documentTypes;
-
-	public String debug ()
-	{
-		StringBuilder sb = new StringBuilder ();
-		for (String s : bivesResults.keySet ())
-			sb.append (s + "=" + bivesResults.get (s) + ";");
-		return sb.toString ();
-	}
 	
+	/** The meta informations. */
+	protected HashMap<String, String> meta;
+	
+	/** The node statistics. */
+	protected HashMap<String, Integer> nodeStats;
+	
+	/** The document types. */
+	protected List<String> documentTypes;
+	
+	/**
+	 * Gets the meta informations.
+	 *
+	 * @return the meta
+	 */
 	public HashMap<String, String> getMeta ()
 	{
 		return meta;
 	}
 	
+	/**
+	 * Gets the node statistics as a map: NODE_NAME => OCCURRENCES.
+	 *
+	 * @return the node statistics
+	 */
 	public HashMap<String, Integer> getNodeStats ()
 	{
 		return nodeStats;
 	}
 	
+	/**
+	 * Gets the document types.
+	 *
+	 * @return the document types
+	 */
 	public List<String> getDocumentTypes ()
 	{
 		return documentTypes;
 	}
 	
+	/* (non-Javadoc)
+	 * @see de.unirostock.sems.bivesWsClient.BivesResponse#postProcess()
+	 */
 	@Override
-	public void prostProcess ()
+	public void postProcess ()
 	{
 		// parse meta stuff
 		String meta = bivesResults.get (COMMAND_META);
