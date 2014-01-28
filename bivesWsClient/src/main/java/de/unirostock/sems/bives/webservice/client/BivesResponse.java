@@ -1,4 +1,4 @@
-package de.unirostock.sems.bivesWsClient;
+package de.unirostock.sems.bives.webservice.client;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,9 +35,9 @@ public abstract class BivesResponse implements Serializable, BivesCommands {
 	 *
 	 * @param key the command
 	 * @return the result
-	 * @see de.unirostock.sems.bivesWsClient.BivesCommands
-	 * @see de.unirostock.sems.bivesWsClient.BivesComparisonCommands
-	 * @see de.unirostock.sems.bivesWsClient.BivesSingleFileCommands
+	 * @see de.unirostock.sems.bives.webservice.client.BivesCommands
+	 * @see de.unirostock.sems.bives.webservice.client.BivesComparisonCommands
+	 * @see de.unirostock.sems.bives.webservice.client.BivesSingleFileCommands
 	 * 
 	 */
 	public String getResult (String key)

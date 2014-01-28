@@ -1,4 +1,4 @@
-package de.unirostock.sems.bivesWsClient;
+package de.unirostock.sems.bives.webservice.client;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +36,9 @@ public abstract class BivesRequest implements BivesCommands {
 	 * Adds another command.
 	 *
 	 * @param command the command
-	 * @see de.unirostock.sems.bivesWsClient.BivesCommands
-	 * @see de.unirostock.sems.bivesWsClient.BivesComparisonCommands
-	 * @see de.unirostock.sems.bivesWsClient.BivesSingleFileCommands
+	 * @see de.unirostock.sems.bives.webservice.client.BivesCommands
+	 * @see de.unirostock.sems.bives.webservice.client.BivesComparisonCommands
+	 * @see de.unirostock.sems.bives.webservice.client.BivesSingleFileCommands
 	 */
 	public void addCommand(String command) {
 		commands.add(command);

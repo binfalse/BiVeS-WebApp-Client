@@ -1,4 +1,4 @@
-package de.unirostock.sems.bivesWsClient.impl;
+package de.unirostock.sems.bives.webservice.client.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,15 +21,15 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import de.unirostock.sems.bivesWsClient.BivesComparisonRequest;
-import de.unirostock.sems.bivesWsClient.BivesComparisonResponse;
-import de.unirostock.sems.bivesWsClient.BivesRequest;
-import de.unirostock.sems.bivesWsClient.BivesResponse;
-import de.unirostock.sems.bivesWsClient.BivesSingleFileRequest;
-import de.unirostock.sems.bivesWsClient.BivesSingleFileResponse;
-import de.unirostock.sems.bivesWsClient.BivesWs;
-import de.unirostock.sems.bivesWsClient.exception.BivesClientException;
-import de.unirostock.sems.bivesWsClient.exception.BivesException;
+import de.unirostock.sems.bives.webservice.client.BivesComparisonRequest;
+import de.unirostock.sems.bives.webservice.client.BivesComparisonResponse;
+import de.unirostock.sems.bives.webservice.client.BivesRequest;
+import de.unirostock.sems.bives.webservice.client.BivesResponse;
+import de.unirostock.sems.bives.webservice.client.BivesSingleFileRequest;
+import de.unirostock.sems.bives.webservice.client.BivesSingleFileResponse;
+import de.unirostock.sems.bives.webservice.client.BivesWs;
+import de.unirostock.sems.bives.webservice.client.exception.BivesClientException;
+import de.unirostock.sems.bives.webservice.client.exception.BivesException;
 
 /**
  * The Implementation of a BiVeS web service Client.

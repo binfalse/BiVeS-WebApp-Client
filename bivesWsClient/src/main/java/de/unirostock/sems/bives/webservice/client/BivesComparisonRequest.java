@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.unirostock.sems.bivesWsClient;
+package de.unirostock.sems.bives.webservice.client;
 
 import java.util.List;
 
@@ -67,7 +67,7 @@ public class BivesComparisonRequest extends BivesRequest implements BivesCompari
 	/**
 	 * Checks if the request is ready. (are there exactly two models and at least one command?)
 	 * 
-	 * @see de.unirostock.sems.bivesWsClient.BivesRequest#isReady()
+	 * @see de.unirostock.sems.bives.webservice.client.BivesRequest#isReady()
 	 */
 	public boolean isReady ()
 	{

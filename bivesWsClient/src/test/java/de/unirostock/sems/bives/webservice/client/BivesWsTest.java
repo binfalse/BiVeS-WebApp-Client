@@ -1,4 +1,4 @@
-package de.unirostock.sems.bivesWsClient;
+package de.unirostock.sems.bives.webservice.client;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -10,7 +10,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import de.unirostock.sems.bivesWsClient.impl.HttpBivesClient;
+import de.unirostock.sems.bives.webservice.client.BivesComparisonRequest;
+import de.unirostock.sems.bives.webservice.client.BivesComparisonResponse;
+import de.unirostock.sems.bives.webservice.client.BivesSingleFileRequest;
+import de.unirostock.sems.bives.webservice.client.BivesSingleFileResponse;
+import de.unirostock.sems.bives.webservice.client.BivesWs;
+import de.unirostock.sems.bives.webservice.client.impl.HttpBivesClient;
 
 /**
  * The Class BivesWsTest to test the coded stuff.

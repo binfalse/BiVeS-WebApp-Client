@@ -1,7 +1,7 @@
-package de.unirostock.sems.bivesWsClient;
+package de.unirostock.sems.bives.webservice.client;
 
-import de.unirostock.sems.bivesWsClient.exception.BivesClientException;
-import de.unirostock.sems.bivesWsClient.exception.BivesException;
+import de.unirostock.sems.bives.webservice.client.exception.BivesClientException;
+import de.unirostock.sems.bives.webservice.client.exception.BivesException;
 
 
 /**

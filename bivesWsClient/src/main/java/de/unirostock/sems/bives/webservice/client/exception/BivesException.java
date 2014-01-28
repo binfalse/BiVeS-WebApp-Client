@@ -1,4 +1,4 @@
-package de.unirostock.sems.bivesWsClient.exception;
+package de.unirostock.sems.bives.webservice.client.exception;
 
 public class BivesException extends Exception {
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.unirostock.sems.bivesWsClient;
+package de.unirostock.sems.bives.webservice.client;
 
 import java.util.ArrayList;
 import java.util.HashMap;
