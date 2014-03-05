@@ -23,6 +23,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import de.unirostock.sems.bives.webservice.client.BivesComparisonRequest;
 import de.unirostock.sems.bives.webservice.client.BivesComparisonResponse;
@@ -116,9 +117,18 @@ public class HttpBivesClient implements BivesWs {
 			throw new BivesClientException("The result returned from the BiVeS Webservice is empty or null!");
 
 //		System.out.println("Bives: " + stringResult);
-
-		JsonParser parser = new JsonParser();
-		JsonObject obj = parser.parse(stringResult).getAsJsonObject ();
+		JsonObject obj = null;
+		try {
+			JsonParser parser = new JsonParser();
+			obj = parser.parse(stringResult).getAsJsonObject ();
+		}
+		catch (JsonSyntaxException e) {
+			throw new BivesClientException("Error while parsing the json result!", e);
+		}
+		
+		if( obj == null )
+			throw new BivesClientException("Can not parse the json result!");
+		
 		for (Entry<String, JsonElement> entry : obj.entrySet ())
 		{
 			String key = entry.getKey ();
