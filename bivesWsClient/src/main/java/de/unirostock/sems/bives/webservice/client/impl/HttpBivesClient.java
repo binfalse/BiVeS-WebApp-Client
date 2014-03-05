@@ -3,17 +3,20 @@ package de.unirostock.sems.bives.webservice.client.impl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.protocol.HTTP;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -78,17 +81,20 @@ public class HttpBivesClient implements BivesWs {
 		httpRequest.setEntity( new StringEntity(json, ContentType.APPLICATION_JSON) );
 
 		String stringResult = null;
-		
-		
-		
+
+
+		HttpResponse response = null;
 		// Retrieving the Http Response
 		try {
-			HttpResponse response = httpClient.execute(httpRequest);
+			response = httpClient.execute(httpRequest);
 
 			// reads the result
 			StringBuilder stringResultBuilder = new StringBuilder();
 			BufferedReader resultReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-
+			
+			// TODO check status code
+			response.getStatusLine().getStatusCode();
+			
 			String line = "";
 			while ((line = resultReader.readLine()) != null) {
 				//append              
@@ -102,23 +108,29 @@ public class HttpBivesClient implements BivesWs {
 			throw new BivesClientException("IO Exception while fetching content from the server.", e);
 		}
 		
+		// check for http error code
+		if( response.getStatusLine().getStatusCode() != 200 )
+			throw new BivesClientException( MessageFormat.format("Unexpected HttpStatus while connecting to BiVeS-WS: {0}: {1}", response.getStatusLine().getStatusCode(), response.getStatusLine().getReasonPhrase()));
+		
 		if( stringResult == null || stringResult.isEmpty() )
 			throw new BivesClientException("The result returned from the BiVeS Webservice is empty or null!");
-		
+
+//		System.out.println("Bives: " + stringResult);
+
 		JsonParser parser = new JsonParser();
-    JsonObject obj = parser.parse(stringResult).getAsJsonObject ();
-    for (Entry<String, JsonElement> entry : obj.entrySet ())
-    {
-    	String key = entry.getKey ();
-    	if (key.equals ("error"))
-    	{
-    		JsonArray array = entry.getValue ().getAsJsonArray ();
-    		for (JsonElement arrayElement : array)
-    			result.addError (arrayElement.getAsString ());
-    		continue;
-    	}
-    	result.setResult (key, entry.getValue ().getAsString ());
-    }
+		JsonObject obj = parser.parse(stringResult).getAsJsonObject ();
+		for (Entry<String, JsonElement> entry : obj.entrySet ())
+		{
+			String key = entry.getKey ();
+			if (key.equals ("error"))
+			{
+				JsonArray array = entry.getValue ().getAsJsonArray ();
+				for (JsonElement arrayElement : array)
+					result.addError (arrayElement.getAsString ());
+				continue;
+			}
+			result.setResult (key, entry.getValue ().getAsString ());
+		}
 	}
 
 	/* (non-Javadoc)
@@ -126,29 +138,29 @@ public class HttpBivesClient implements BivesWs {
 	 */
 	@Override
 	public BivesSingleFileResponse performRequest (BivesSingleFileRequest request)
-		throws BivesClientException,
+			throws BivesClientException,
 			BivesException
-	{
+			{
 		BivesSingleFileResponse response = new BivesSingleFileResponse ();
-		
+
 		performRequest (request, response);
 		response.postProcess ();
-		
+
 		return response;
-	}
+			}
 
 	/* (non-Javadoc)
 	 * @see de.unirostock.sems.bivesWsClient.BivesWs#performRequest(de.unirostock.sems.bivesWsClient.BivesComparisonRequest)
 	 */
 	@Override
 	public BivesComparisonResponse performRequest (BivesComparisonRequest request)
-		throws BivesClientException,
+			throws BivesClientException,
 			BivesException
-	{
+			{
 		BivesComparisonResponse response = new BivesComparisonResponse ();
 		performRequest (request, response);
 		response.postProcess ();
 		return response;
-	}
-	
+			}
+
 }
