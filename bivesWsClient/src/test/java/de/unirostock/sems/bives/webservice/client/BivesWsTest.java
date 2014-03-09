@@ -126,6 +126,7 @@ public class BivesWsTest {
 	
 			request.addCommand(BivesComparisonRequest.COMMAND_REPORT_MARKDOWN);
 			request.addCommand(BivesComparisonRequest.COMMAND_CRN_JSON);
+			request.addCommand(BivesComparisonRequest.COMMAND_COMPONENT_HIERARCHY_GRAPHML);
 
 			BivesWs bives = new HttpBivesClient("http://bives.sems.uni-rostock.de/");
 			BivesComparisonResponse result = bives.performRequest(request);
@@ -135,6 +136,9 @@ public class BivesWsTest {
 			
 			assertNotNull ("response for "+BivesComparisonResponse.COMMAND_CRN_JSON+" shouldn't be null ", result.getResult (BivesComparisonResponse.COMMAND_CRN_JSON));
 			assertTrue ("response for "+BivesComparisonResponse.COMMAND_CRN_JSON+" shouldn't be empty", result.getResult (BivesComparisonResponse.COMMAND_CRN_JSON).length () > 0);
+
+			assertNotNull ("response for "+BivesComparisonResponse.COMMAND_COMPONENT_HIERARCHY_GRAPHML+" shouldn't be null ", result.getResult (BivesComparisonResponse.COMMAND_COMPONENT_HIERARCHY_GRAPHML));
+			assertTrue ("response for "+BivesComparisonResponse.COMMAND_COMPONENT_HIERARCHY_GRAPHML+" should be empty", result.getResult (BivesComparisonResponse.COMMAND_COMPONENT_HIERARCHY_GRAPHML).length () == 0);
 			
 			assertNull ("response for "+BivesComparisonResponse.COMMAND_CRN_DOT +" should be null ", result.getResult (BivesComparisonResponse.COMMAND_CRN_DOT));
 		}
