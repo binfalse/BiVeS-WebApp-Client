@@ -73,12 +73,15 @@ public class BivesSingleFileResponse extends BivesResponse implements BivesSingl
 				if (token.length () < 3)
 					continue;
 				String [] kv = token.split (":");
-				if (kv.length != 2)
+				if (kv.length != 2 && !kv[0].equals ("nodestats"))
 					continue;
 				
 				if (kv[0].equals ("nodestats"))
 				{
 					this.nodeStats = new HashMap<String, Integer> ();
+					if (kv.length > 2)
+						for (int i = 2; i < kv.length; i++)
+							kv[1] += kv[i];
 					String [] stats = kv[1].substring (1, kv[1].length () - 1).split (",");
 					for (String stat : stats)
 					{
@@ -87,7 +90,7 @@ public class BivesSingleFileResponse extends BivesResponse implements BivesSingl
 						String [] kv2 = stat.split ("=");
 						if (kv2.length != 2)
 							continue;
-						this.nodeStats.put (kv2[0], Integer.parseInt (kv2[1]));
+						this.nodeStats.put (kv2[0].trim (), Integer.parseInt (kv2[1].trim ()));
 					}
 				}
 				else

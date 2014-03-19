@@ -112,6 +112,37 @@ public class BivesWsTest {
 			fail ("wasn't able to call bives websevice: " + bce.getMessage ());
 		}
 	}
+	
+	@Test
+	public void testFlattening ()
+	{
+		try
+		{
+			BivesSingleFileRequest request = new BivesSingleFileRequest("http://models.cellml.org/exposure/385475ef63ff3f2d42e3dcb52f3982d2/MainDVad.cellml");
+
+			request.addCommand(BivesSingleFileRequest.COMMAND_DOCUMENT_TYPE);
+			request.addCommand(BivesSingleFileRequest.COMMAND_META);
+			request.addCommand(BivesSingleFileRequest.COMMAND_SINFLE_FLATTEN);
+			
+			BivesWs bives = new HttpBivesClient("http://bives.sems.uni-rostock.de/");
+			BivesSingleFileResponse result = bives.performRequest(request);
+			
+			assertNotNull ("response for "+BivesSingleFileResponse.COMMAND_DOCUMENT_TYPE+" shouldn't be null ", result.getDocumentTypes ());
+			assertEquals ("response for "+BivesSingleFileResponse.COMMAND_DOCUMENT_TYPE+" should be XML,SBML", 2, result.getDocumentTypes ().size ());
+			
+			assertNotNull ("response for "+BivesSingleFileResponse.COMMAND_META+" shouldn't be null ", result.getMeta ());
+			assertNotNull ("response for "+BivesSingleFileResponse.COMMAND_META+" [sbmlVersion] shouldn't be null ", result.getMeta ().get ("sbmlVersion"));
+			assertTrue ("response for "+BivesSingleFileResponse.COMMAND_META+" [sbmlVersion] shouldn't be empty", result.getMeta ().get ("sbmlVersion").length () > 0);
+			
+			assertNotNull ("response for "+BivesSingleFileResponse.COMMAND_SINFLE_FLATTEN+" shouldn't be null ", result.getResult (BivesSingleFileResponse.COMMAND_SINFLE_FLATTEN));
+			
+		}
+		catch (Exception bce)
+		{
+			bce.printStackTrace ();
+			fail ("wasn't able to call bives websevice: " + bce.getMessage ());
+		}
+	}
 
   
 	/**

@@ -9,14 +9,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.protocol.HTTP;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -139,7 +137,8 @@ public class HttpBivesClient implements BivesWs {
 					result.addError (arrayElement.getAsString ());
 				continue;
 			}
-			result.setResult (key, entry.getValue ().getAsString ());
+			else
+				result.setResult (key, entry.getValue ().getAsString ());
 		}
 	}
 

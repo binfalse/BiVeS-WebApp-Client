@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>de.unirostock.sems</groupId>
-	<artifactId>bivesWsClient</artifactId>
+	<artifactId>BiVeS-WS-Client</artifactId>
 	<version>0.2.2</version>
 	<packaging>jar</packaging>
 
-	<name>bivesWsClient</name>
+	<name>BiVeS-WS-Client</name>
 	<url>http://sems.uni-rostock.de</url>
 
 	<organization>

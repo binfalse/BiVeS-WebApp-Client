@@ -1,0 +1,9 @@
+/target
+/.settings
+.target/*
+.settings/*
+build
+bin
+dist
+target
+lib

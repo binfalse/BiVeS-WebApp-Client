@@ -38,4 +38,7 @@ public interface BivesSingleFileCommands extends BivesCommands
 	/** get the component hierarchy encoded in JSON (only available for CellML files) */
 	public static final String COMMAND_SINFLE_FILE_COMPONENT_HIERARCHY_JSON = "singleCompHierarchyJson";
 	
+	/** get the flattened model */
+	public static final String COMMAND_SINFLE_FLATTEN = "singleFlatten";
+	
 }
