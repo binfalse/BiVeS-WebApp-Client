@@ -20,7 +20,8 @@ public abstract class BivesResponse implements Serializable, BivesCommands {
 	/**
 	 * The Constructor to create an BiVeS web service response.
 	 */
-	public BivesResponse() {
+	public BivesResponse()
+	{
 		this.error = new ArrayList<String> ();
 		this.bivesResults = new HashMap<String, String> ();
 	}
@@ -81,7 +82,8 @@ public abstract class BivesResponse implements Serializable, BivesCommands {
 	 *
 	 * @return the errors
 	 */
-	public List<String> getErrors() {
+	public List<String> getErrors()
+	{
 		return error;
 	}
 

@@ -26,18 +26,18 @@ public class ClientComparisonExample
 	 */
 	public static void main (String[] args) throws BivesClientException, BivesException
 	{
-		BivesSingleFileRequest request = new BivesSingleFileRequest("http://budhat.sems.uni-rostock.de/download?downloadModel=25");
-		//BivesSingleFileRequest request = new BivesSingleFileRequest("http://budhat.sems.uni-rostock.de/download?downloadModel=27");
-		//BivesSingleFileRequest request = new BivesSingleFileRequest("http://models.cellml.org/exposure/385475ef63ff3f2d42e3dcb52f3982d2/MainDVad.cellml");
+		BivesComparisonRequest request = new BivesComparisonRequest (
+			"http://budhat.sems.uni-rostock.de/download?downloadModel=24",
+			"http://budhat.sems.uni-rostock.de/download?downloadModel=25");
 		
 		// add commands
-		request.addCommand(BivesSingleFileRequest.COMMAND_DOCUMENT_TYPE);
-		request.addCommand(BivesSingleFileRequest.COMMAND_META);
-		//request.addCommand(BivesSingleFileRequest.COMMAND_SINFLE_FLATTEN);
+		request.addCommand(BivesComparisonRequest.COMMAND_FORCE_SBML);
+		request.addCommand(BivesComparisonRequest.COMMAND_CRN_GRAPHML);
+		request.addCommand(BivesComparisonRequest.COMMAND_REPORT_HTML);
 				
 		// send request and get response
 		BivesWs bives = new HttpBivesClient("http://bives.sems.uni-rostock.de/");
-		BivesSingleFileResponse result = bives.performRequest(request);
+		BivesComparisonResponse result = bives.performRequest(request);
 		
 		// anything bad happened?
 		if (result.hasError ())
@@ -47,26 +47,14 @@ public class ClientComparisonExample
 			System.exit (1);
 		}
 		
-		// get the flattened model:
-		//String flattenedModel = result.getResult (BivesSingleFileResponse.COMMAND_SINFLE_FLATTEN);
-		//System.out.println ("flattened model is " + flattenedModel.length () + " chars");
 		
+		System.out.println ("the highlighted CRN encoded in graphml:");
+		System.out.println (result.getResult (BivesComparisonResponse.COMMAND_CRN_GRAPHML));
 		
-		// what type of document is this?
-		System.out.println ("this is of type " + result.getDocumentTypes ());
-		
-		
-		// get the meta
-		Map<String, String> meta = result.getMeta ();
-		// available keys:
-		System.out.println ("meta keys: " + meta.keySet ());
-		// in cellml models we could for example ask for the model's name
-		System.out.println ("model name: " + meta.get ("modelName"));
 
+		System.out.println ("the report encoded in html:");
+		System.out.println (result.getResult (BivesComparisonResponse.COMMAND_REPORT_HTML));
 		
-		// get the node stats (some statistics about the nodes int the corresponding XML document)
-		Map<String, Integer> nodeStats = result.getNodeStats ();
-		System.out.println ("there are " + nodeStats.get ("component") + " component nodes in the XML tree");
 		
 	}
 	
