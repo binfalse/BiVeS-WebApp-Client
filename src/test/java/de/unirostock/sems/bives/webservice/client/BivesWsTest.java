@@ -88,7 +88,7 @@ public class BivesWsTest {
 			request.addCommand(BivesSingleFileRequest.COMMAND_DOCUMENT_TYPE);
 			request.addCommand(BivesSingleFileRequest.COMMAND_FORCE_SBML);
 			request.addCommand(BivesSingleFileRequest.COMMAND_META);
-			request.addCommand(BivesSingleFileRequest.COMMAND_SINFLE_FILE_CRN_JSON);
+			request.addCommand(BivesSingleFileRequest.COMMAND_SINGLE_FILE_CRN_JSON);
 
 			BivesWs bives = new HttpBivesClient("http://bives.sems.uni-rostock.de/");
 			BivesSingleFileResponse result = bives.performRequest(request);
@@ -103,8 +103,8 @@ public class BivesWsTest {
 			assertNotNull ("response for "+BivesSingleFileResponse.COMMAND_META+" [nodestats] shouldn't be null ", result.getNodeStats ());
 			assertTrue ("response for "+BivesSingleFileResponse.COMMAND_META+" [nodestats] shouldn't be empty", result.getNodeStats ().size () > 0);
 
-			assertNotNull ("response for "+BivesSingleFileResponse.COMMAND_SINFLE_FILE_CRN_JSON+" shouldn't be null ", result.getResult (BivesSingleFileResponse.COMMAND_SINFLE_FILE_CRN_JSON));
-			assertTrue ("response for "+BivesSingleFileResponse.COMMAND_SINFLE_FILE_CRN_JSON+" shouldn't be empty", result.getResult (BivesSingleFileResponse.COMMAND_SINFLE_FILE_CRN_JSON).length () > 0);
+			assertNotNull ("response for "+BivesSingleFileResponse.COMMAND_SINGLE_FILE_CRN_JSON+" shouldn't be null ", result.getResult (BivesSingleFileResponse.COMMAND_SINGLE_FILE_CRN_JSON));
+			assertTrue ("response for "+BivesSingleFileResponse.COMMAND_SINGLE_FILE_CRN_JSON+" shouldn't be empty", result.getResult (BivesSingleFileResponse.COMMAND_SINGLE_FILE_CRN_JSON).length () > 0);
 		}
 		catch (Exception bce)
 		{
@@ -122,7 +122,7 @@ public class BivesWsTest {
 
 			request.addCommand(BivesSingleFileRequest.COMMAND_DOCUMENT_TYPE);
 			request.addCommand(BivesSingleFileRequest.COMMAND_META);
-			request.addCommand(BivesSingleFileRequest.COMMAND_SINFLE_FLATTEN);
+			request.addCommand(BivesSingleFileRequest.COMMAND_SINGLE_FLATTEN);
 			
 			BivesWs bives = new HttpBivesClient("http://bives.sems.uni-rostock.de/");
 			BivesSingleFileResponse result = bives.performRequest(request);
@@ -134,7 +134,7 @@ public class BivesWsTest {
 			assertNotNull ("response for "+BivesSingleFileResponse.COMMAND_META+" [sbmlVersion] shouldn't be null ", result.getMeta ().get ("sbmlVersion"));
 			assertTrue ("response for "+BivesSingleFileResponse.COMMAND_META+" [sbmlVersion] shouldn't be empty", result.getMeta ().get ("sbmlVersion").length () > 0);
 			
-			assertNotNull ("response for "+BivesSingleFileResponse.COMMAND_SINFLE_FLATTEN+" shouldn't be null ", result.getResult (BivesSingleFileResponse.COMMAND_SINFLE_FLATTEN));
+			assertNotNull ("response for "+BivesSingleFileResponse.COMMAND_SINGLE_FLATTEN+" shouldn't be null ", result.getResult (BivesSingleFileResponse.COMMAND_SINGLE_FLATTEN));
 			
 		}
 		catch (Exception bce)

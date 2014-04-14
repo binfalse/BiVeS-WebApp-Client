@@ -26,19 +26,19 @@ public interface BivesSingleFileCommands extends BivesCommands
 	public static final String COMMAND_SINGLE_FILE_CRN_DOT = "singleCrnDot";
 	
 	/** get the chemical reation network encoded in JSON */
-	public static final String COMMAND_SINFLE_FILE_CRN_JSON = "singleCrnJson";
+	public static final String COMMAND_SINGLE_FILE_CRN_JSON = "singleCrnJson";
 	
 	// hierarchy
 	/** get the component hierarchy encoded in GraphML (only available for CellML files) */
-	public static final String COMMAND_SINFLE_FILE_COMPONENT_HIERARCHY_GRAPHML = "singleCompHierarchyGraphml";
+	public static final String COMMAND_SINGLE_FILE_COMPONENT_HIERARCHY_GRAPHML = "singleCompHierarchyGraphml";
 	
 	/** get the component hierarchy encoded in DOT (only available for CellML files) */
-	public static final String COMMAND_SINFLE_FILE_COMPONENT_HIERARCHY_DOT = "singleCompHierarchyDot";
+	public static final String COMMAND_SINGLE_FILE_COMPONENT_HIERARCHY_DOT = "singleCompHierarchyDot";
 	
 	/** get the component hierarchy encoded in JSON (only available for CellML files) */
-	public static final String COMMAND_SINFLE_FILE_COMPONENT_HIERARCHY_JSON = "singleCompHierarchyJson";
+	public static final String COMMAND_SINGLE_FILE_COMPONENT_HIERARCHY_JSON = "singleCompHierarchyJson";
 	
 	/** get the flattened model */
-	public static final String COMMAND_SINFLE_FLATTEN = "singleFlatten";
+	public static final String COMMAND_SINGLE_FLATTEN = "singleFlatten";
 	
 }
