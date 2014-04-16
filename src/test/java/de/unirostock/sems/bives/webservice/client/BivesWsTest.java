@@ -32,7 +32,7 @@ public class BivesWsTest {
 		try
 		{
 			BivesComparisonRequest request = new BivesComparisonRequest();
-			request.setModels ("http://bives.sems.uni-rostock.de/", "http://bives.sems.uni-rostock.de/");
+			request.setModels ("http://bives.sems.uni-rostock.de/this-test-fails", "http://bives.sems.uni-rostock.de/this-test-fails");
 	
 			request.addCommand(BivesComparisonRequest.COMMAND_REPORT_MARKDOWN);
 			request.addCommand(BivesComparisonRequest.COMMAND_CRN_JSON);
