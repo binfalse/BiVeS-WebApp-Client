@@ -35,7 +35,7 @@ public class BivesWsTest {
 			request.setModels ("http://bives.sems.uni-rostock.de/this-test-fails", "http://bives.sems.uni-rostock.de/this-test-fails");
 	
 			request.addCommand(BivesComparisonRequest.COMMAND_REPORT_MARKDOWN);
-			request.addCommand(BivesComparisonRequest.COMMAND_CRN_JSON);
+			request.addCommand(BivesComparisonRequest.COMMAND_REACTIONS_JSON);
 			request.addCommand(BivesComparisonRequest.COMMAND_FORCE_SBML);
 			
 			BivesWs bives = new HttpBivesClient("http://bives.sems.uni-rostock.de/");
@@ -64,7 +64,7 @@ public class BivesWsTest {
 			request.setModels ("http://budhat.sems.uni-rostock.de/download?downloadModel=25", "http://budhat.sems.uni-rostock.de/download?downloadModel=24");
 	
 			request.addCommand(BivesComparisonRequest.COMMAND_REPORT_MARKDOWN);
-			request.addCommand(BivesComparisonRequest.COMMAND_CRN_JSON);
+			request.addCommand(BivesComparisonRequest.COMMAND_REACTIONS_JSON);
 
 			BivesWs bives = new HttpBivesClient("http://sems.uni-rostock.de/");
 			bives.performRequest(request);
@@ -88,7 +88,7 @@ public class BivesWsTest {
 			request.addCommand(BivesSingleFileRequest.COMMAND_DOCUMENT_TYPE);
 			request.addCommand(BivesSingleFileRequest.COMMAND_FORCE_SBML);
 			request.addCommand(BivesSingleFileRequest.COMMAND_META);
-			request.addCommand(BivesSingleFileRequest.COMMAND_SINGLE_FILE_CRN_JSON);
+			request.addCommand(BivesSingleFileRequest.COMMAND_SINGLE_FILE_REACTIONS_JSON);
 
 			BivesWs bives = new HttpBivesClient("http://bives.sems.uni-rostock.de/");
 			BivesSingleFileResponse result = bives.performRequest(request);
@@ -103,8 +103,8 @@ public class BivesWsTest {
 			assertNotNull ("response for "+BivesSingleFileResponse.COMMAND_META+" [nodestats] shouldn't be null ", result.getNodeStats ());
 			assertTrue ("response for "+BivesSingleFileResponse.COMMAND_META+" [nodestats] shouldn't be empty", result.getNodeStats ().size () > 0);
 
-			assertNotNull ("response for "+BivesSingleFileResponse.COMMAND_SINGLE_FILE_CRN_JSON+" shouldn't be null ", result.getResult (BivesSingleFileResponse.COMMAND_SINGLE_FILE_CRN_JSON));
-			assertTrue ("response for "+BivesSingleFileResponse.COMMAND_SINGLE_FILE_CRN_JSON+" shouldn't be empty", result.getResult (BivesSingleFileResponse.COMMAND_SINGLE_FILE_CRN_JSON).length () > 0);
+			assertNotNull ("response for "+BivesSingleFileResponse.COMMAND_SINGLE_FILE_REACTIONS_JSON+" shouldn't be null ", result.getResult (BivesSingleFileResponse.COMMAND_SINGLE_FILE_REACTIONS_JSON));
+			assertTrue ("response for "+BivesSingleFileResponse.COMMAND_SINGLE_FILE_REACTIONS_JSON+" shouldn't be empty", result.getResult (BivesSingleFileResponse.COMMAND_SINGLE_FILE_REACTIONS_JSON).length () > 0);
 		}
 		catch (Exception bce)
 		{
@@ -156,7 +156,7 @@ public class BivesWsTest {
 			request.setModels ("http://budhat.sems.uni-rostock.de/download?downloadModel=25", "http://budhat.sems.uni-rostock.de/download?downloadModel=24");
 	
 			request.addCommand(BivesComparisonRequest.COMMAND_REPORT_MARKDOWN);
-			request.addCommand(BivesComparisonRequest.COMMAND_CRN_JSON);
+			request.addCommand(BivesComparisonRequest.COMMAND_REACTIONS_JSON);
 			request.addCommand(BivesComparisonRequest.COMMAND_COMPONENT_HIERARCHY_GRAPHML);
 
 			BivesWs bives = new HttpBivesClient("http://bives.sems.uni-rostock.de/");
@@ -165,13 +165,13 @@ public class BivesWsTest {
 			assertNotNull ("response for "+BivesComparisonResponse.COMMAND_REPORT_MARKDOWN+" shouldn't be null ", result.getResult (BivesComparisonResponse.COMMAND_REPORT_MARKDOWN));
 			assertTrue ("response for "+BivesComparisonResponse.COMMAND_REPORT_MARKDOWN+" shouldn't be empty", result.getResult (BivesComparisonResponse.COMMAND_REPORT_MARKDOWN).length () > 0);
 			
-			assertNotNull ("response for "+BivesComparisonResponse.COMMAND_CRN_JSON+" shouldn't be null ", result.getResult (BivesComparisonResponse.COMMAND_CRN_JSON));
-			assertTrue ("response for "+BivesComparisonResponse.COMMAND_CRN_JSON+" shouldn't be empty", result.getResult (BivesComparisonResponse.COMMAND_CRN_JSON).length () > 0);
+			assertNotNull ("response for "+BivesComparisonResponse.COMMAND_REACTIONS_JSON+" shouldn't be null ", result.getResult (BivesComparisonResponse.COMMAND_REACTIONS_JSON));
+			assertTrue ("response for "+BivesComparisonResponse.COMMAND_REACTIONS_JSON+" shouldn't be empty", result.getResult (BivesComparisonResponse.COMMAND_REACTIONS_JSON).length () > 0);
 
 			assertNotNull ("response for "+BivesComparisonResponse.COMMAND_COMPONENT_HIERARCHY_GRAPHML+" shouldn't be null ", result.getResult (BivesComparisonResponse.COMMAND_COMPONENT_HIERARCHY_GRAPHML));
 			assertTrue ("response for "+BivesComparisonResponse.COMMAND_COMPONENT_HIERARCHY_GRAPHML+" should be empty", result.getResult (BivesComparisonResponse.COMMAND_COMPONENT_HIERARCHY_GRAPHML).length () == 0);
 			
-			assertNull ("response for "+BivesComparisonResponse.COMMAND_CRN_DOT +" should be null ", result.getResult (BivesComparisonResponse.COMMAND_CRN_DOT));
+			assertNull ("response for "+BivesComparisonResponse.COMMAND_REACTIONS_DOT +" should be null ", result.getResult (BivesComparisonResponse.COMMAND_REACTIONS_DOT));
 		}
 		catch (Exception bce)
 		{

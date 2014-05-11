@@ -32,7 +32,7 @@ public class ClientComparisonExample
 		
 		// add commands
 		request.addCommand(BivesComparisonRequest.COMMAND_FORCE_SBML);
-		request.addCommand(BivesComparisonRequest.COMMAND_CRN_GRAPHML);
+		request.addCommand(BivesComparisonRequest.COMMAND_REACTIONS_GRAPHML);
 		request.addCommand(BivesComparisonRequest.COMMAND_REPORT_HTML);
 				
 		// send request and get response
@@ -49,7 +49,7 @@ public class ClientComparisonExample
 		
 		
 		System.out.println ("the highlighted CRN encoded in graphml:");
-		System.out.println (result.getResult (BivesComparisonResponse.COMMAND_CRN_GRAPHML));
+		System.out.println (result.getResult (BivesComparisonResponse.COMMAND_REACTIONS_GRAPHML));
 		
 
 		System.out.println ("the report encoded in html:");

@@ -18,15 +18,15 @@ public interface BivesSingleFileCommands extends BivesCommands
 	/** get some meta information about the file */
 	public static final String COMMAND_META = "meta";
 	
-	// crn
-	/** get the chemical reation network encoded in GraphML */
-	public static final String COMMAND_SINGLE_FILE_CRN_GRAPHML = "singleCrnGraphml";
+	// reaction network
+	/** get the reaction network encoded in GraphML */
+	public static final String COMMAND_SINGLE_FILE_REACTIONS_GRAPHML = "singleReactionsGraphml";
 	
-	/** get the chemical reation network encoded in DOT */
-	public static final String COMMAND_SINGLE_FILE_CRN_DOT = "singleCrnDot";
+	/** get the reaction network encoded in DOT */
+	public static final String COMMAND_SINGLE_FILE_REACTIONS_DOT = "singleReactionsDot";
 	
-	/** get the chemical reation network encoded in JSON */
-	public static final String COMMAND_SINGLE_FILE_CRN_JSON = "singleCrnJson";
+	/** get the reaction network encoded in JSON */
+	public static final String COMMAND_SINGLE_FILE_REACTIONS_JSON = "singleReactionsJson";
 	
 	// hierarchy
 	/** get the component hierarchy encoded in GraphML (only available for CellML files) */

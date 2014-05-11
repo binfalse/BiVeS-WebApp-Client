@@ -15,15 +15,15 @@ public interface BivesComparisonCommands extends BivesCommands
 	/** get the diff encoded in xml */
 	public static final String COMMAND_XML_DIFF = "xmlDiff";
 	
-	// crn
-	/** get the chemical reaction network encoded in GraphML */
-	public static final String COMMAND_CRN_GRAPHML = "crnGraphml";
+	// reaction network
+	/** get the reaction network encoded in GraphML */
+	public static final String COMMAND_REACTIONS_GRAPHML = "reactionsGraphml";
 	
-	/** get the chemical reaction network encoded in DOT */
-	public static final String COMMAND_CRN_DOT = "crnDot";
+	/** get the reaction network encoded in DOT */
+	public static final String COMMAND_REACTIONS_DOT = "reactionsDot";
 	
-	/** get the chemical reaction network encoded in JSON */
-	public static final String COMMAND_CRN_JSON = "crnJson";
+	/** get the reaction network encoded in JSON */
+	public static final String COMMAND_REACTIONS_JSON = "reactionsJson";
 	
 	// report
 	/** get the human readable report encoded in HTML */
