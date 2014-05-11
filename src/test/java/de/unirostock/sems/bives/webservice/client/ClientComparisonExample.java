@@ -3,8 +3,6 @@
  */
 package de.unirostock.sems.bives.webservice.client;
 
-import java.util.Map;
-
 import de.unirostock.sems.bives.webservice.client.exception.BivesClientException;
 import de.unirostock.sems.bives.webservice.client.exception.BivesException;
 import de.unirostock.sems.bives.webservice.client.impl.HttpBivesClient;
@@ -48,7 +46,7 @@ public class ClientComparisonExample
 		}
 		
 		
-		System.out.println ("the highlighted CRN encoded in graphml:");
+		System.out.println ("the highlighted reaction network encoded in graphml:");
 		System.out.println (result.getResult (BivesComparisonResponse.COMMAND_REACTIONS_GRAPHML));
 		
 
