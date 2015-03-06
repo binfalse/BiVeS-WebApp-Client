@@ -9,7 +9,10 @@ import java.util.List;
 public abstract class BivesRequest implements BivesCommands {
 
 	
+	/** The models. */
 	protected List<String> models;
+	
+	/** The commands. */
 	protected List<String> commands;
 	
 	/**

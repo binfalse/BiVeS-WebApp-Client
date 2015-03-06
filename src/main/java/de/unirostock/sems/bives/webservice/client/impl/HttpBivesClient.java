@@ -59,7 +59,6 @@ public class HttpBivesClient implements BivesWs {
 	 * @param request the request for the BiVeS web service
 	 * @param result the result from the BiVeS web service
 	 * @throws BivesClientException the bives client exception
-	 * @throws BivesException the bives exception
 	 */
 	protected void performRequest(BivesRequest request, BivesResponse result) throws BivesClientException {
 

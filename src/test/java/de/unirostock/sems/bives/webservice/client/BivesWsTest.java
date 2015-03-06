@@ -113,7 +113,10 @@ public class BivesWsTest {
 		}
 	}
 	
-	// TODO @Test
+	/**
+	 * Test flattening.
+	 */
+	@Test
 	public void testFlattening ()
 	{
 		try
@@ -131,11 +134,10 @@ public class BivesWsTest {
 			assertEquals ("response for "+BivesSingleFileResponse.COMMAND_DOCUMENT_TYPE+" should be XML,SBML", 2, result.getDocumentTypes ().size ());
 			
 			assertNotNull ("response for "+BivesSingleFileResponse.COMMAND_META+" shouldn't be null ", result.getMeta ());
-			assertNotNull ("response for "+BivesSingleFileResponse.COMMAND_META+" [sbmlVersion] shouldn't be null ", result.getMeta ().get ("sbmlVersion"));
-			assertTrue ("response for "+BivesSingleFileResponse.COMMAND_META+" [sbmlVersion] shouldn't be empty", result.getMeta ().get ("sbmlVersion").length () > 0);
+			assertNotNull ("response for "+BivesSingleFileResponse.COMMAND_META+" [sbmlVersion] shouldn't be null ", result.getMeta ().get ("modelName"));
+			assertTrue ("response for "+BivesSingleFileResponse.COMMAND_META+" [sbmlVersion] shouldn't be empty", result.getMeta ().get ("modelName").equals ("MainDVad"));
 			
 			assertNotNull ("response for "+BivesSingleFileResponse.COMMAND_SINGLE_FLATTEN+" shouldn't be null ", result.getResult (BivesSingleFileResponse.COMMAND_SINGLE_FLATTEN));
-			
 		}
 		catch (Exception bce)
 		{

@@ -12,6 +12,8 @@ import java.util.Map;
 public abstract class BivesResponse implements Serializable, BivesCommands {
 	
 	private static final long serialVersionUID = -2807954477215637789L;
+	
+	/** The bives results. */
 	protected Map<String, String> bivesResults;
 	
 	/** The errors. */
