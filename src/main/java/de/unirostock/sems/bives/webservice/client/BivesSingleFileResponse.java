@@ -37,7 +37,7 @@ public class BivesSingleFileResponse extends BivesResponse implements BivesSingl
 	}
 	
 	/**
-	 * Gets the node statistics as a map: NODE_NAME => OCCURRENCES.
+	 * Gets the node statistics as a map: NODE_NAME =&gt; OCCURRENCES.
 	 *
 	 * @return the node statistics
 	 */
