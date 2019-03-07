@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -90,8 +91,9 @@ public class HttpBivesClient implements BivesWs {
 			StringBuilder stringResultBuilder = new StringBuilder();
 			BufferedReader resultReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 			
-			// TODO check status code
-			response.getStatusLine().getStatusCode();
+			// check for status error code
+			if( response.getStatusLine().getStatusCode() != HttpStatus.SC_OK )
+				throw new BivesClientException( MessageFormat.format("Unexpected HttpStatus while connecting to BiVeS-WS: {0}: {1}", response.getStatusLine().getStatusCode(), response.getStatusLine().getReasonPhrase()));
 			
 			String line = "";
 			while ((line = resultReader.readLine()) != null) {
@@ -106,18 +108,14 @@ public class HttpBivesClient implements BivesWs {
 			throw new BivesClientException("IO Exception while fetching content from the server.", e);
 		}
 		
-		// check for http error code
-		if( response.getStatusLine().getStatusCode() != 200 )
-			throw new BivesClientException( MessageFormat.format("Unexpected HttpStatus while connecting to BiVeS-WS: {0}: {1}", response.getStatusLine().getStatusCode(), response.getStatusLine().getReasonPhrase()));
-		
+		// check resulting string
 		if( stringResult == null || stringResult.isEmpty() )
 			throw new BivesClientException("The result returned from the BiVeS Webservice is empty or null!");
 
 //		System.out.println("Bives: " + stringResult);
 		JsonObject obj = null;
 		try {
-			JsonParser parser = new JsonParser();
-			obj = parser.parse(stringResult).getAsJsonObject ();
+			obj = new JsonParser().parse(stringResult).getAsJsonObject ();
 		}
 		catch (JsonSyntaxException e) {
 			throw new BivesClientException("Error while parsing the json result!", e);
@@ -136,8 +134,28 @@ public class HttpBivesClient implements BivesWs {
 					result.addError (arrayElement.getAsString ());
 				continue;
 			}
-			else
+			else if (key.equals("meta") && result instanceof BivesSingleFileResponse) {
+				BivesSingleFileResponse bsfr = ((BivesSingleFileResponse) result);
+				for(Map.Entry<String,JsonElement> item : entry.getValue ().getAsJsonObject().entrySet()) {
+					if (item.getKey().equals("nodestats")) {
+						for(Map.Entry<String,JsonElement> ns : item.getValue ().getAsJsonObject().entrySet()) {
+							bsfr.setNodeStats (ns.getKey(), ns.getValue().getAsInt());
+						}
+					} else {
+						if (!item.getValue().isJsonNull())
+							bsfr.setMeta (item.getKey(), item.getValue().getAsString());
+					}
+				}
+				
+			}
+			else if (key.equals("documentType") && result instanceof BivesSingleFileResponse) {
+				JsonArray array = entry.getValue ().getAsJsonArray ();
+				for (JsonElement arrayElement : array)
+					((BivesSingleFileResponse) result).addDocumentType (arrayElement.getAsString());
+			}
+			else {
 				result.setResult (key, entry.getValue ().getAsString ());
+			}
 		}
 	}
 

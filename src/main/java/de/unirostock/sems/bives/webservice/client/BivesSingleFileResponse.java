@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class BivesSingleFileResponse extends BivesResponse implements BivesSingleFileCommands
 {
+
 	private static final long	serialVersionUID	= -5594048578870894606L;
 	
 	/** The meta informations. */
@@ -25,6 +26,19 @@ public class BivesSingleFileResponse extends BivesResponse implements BivesSingl
 	
 	/** The document types. */
 	protected List<String> documentTypes;
+	
+	
+	
+	/**
+	 * Instantiates a new bives single file response.
+	 */
+	public BivesSingleFileResponse() {
+		super();
+		this.meta = new HashMap<String, String> ();
+		this.documentTypes = new ArrayList<String> ();
+		this.nodeStats = new HashMap<String, Integer> ();
+	}
+	
 	
 	/**
 	 * Gets the meta informations.
@@ -37,6 +51,30 @@ public class BivesSingleFileResponse extends BivesResponse implements BivesSingl
 	}
 	
 	/**
+	 * Sets the meta informations.
+	 *
+	 * @param key the identify for the meta information
+	 * @param value the meta information to set
+	 */
+	public void setMeta (String key, String value)
+	{
+		meta.put(key, value);
+	}
+	
+	/**
+	 * Sets the statistics for a certain node type.
+	 * 
+	 * Statistics being the number of occurences of this node in the document.
+	 *
+	 * @param tag the tag name of the node
+	 * @param occurences the number of nodes in the document that share this tag name
+	 */
+	public void setNodeStats (String tag, int occurences)
+	{
+		nodeStats.put(tag, occurences);
+	}
+	
+	/**
 	 * Gets the node statistics as a map: NODE_NAME =&gt; OCCURRENCES.
 	 *
 	 * @return the node statistics
@@ -44,6 +82,30 @@ public class BivesSingleFileResponse extends BivesResponse implements BivesSingl
 	public HashMap<String, Integer> getNodeStats ()
 	{
 		return nodeStats;
+	}
+	
+	/**
+	 * Adds another document type to the list of document types.
+	 * 
+	 * @param documentType the new document type that applies to the document
+	 *
+	 */
+	public void addDocumentType (String documentType)
+	{
+		this.documentTypes.add(documentType);
+	}
+	
+	/**
+	 * Sets the document types.
+	 * 
+	 * This will overwrite the existing list of document types.
+	 * 
+	 * @param documentTypes the list of document types that apply to the document
+	 *
+	 */
+	public void setDocumentTypes (List<String> documentTypes)
+	{
+		this.documentTypes = documentTypes;
 	}
 	
 	/**
@@ -62,56 +124,7 @@ public class BivesSingleFileResponse extends BivesResponse implements BivesSingl
 	@Override
 	public void postProcess ()
 	{
-		// parse meta stuff
-		String meta = bivesResults.get (COMMAND_META);
-		if (meta != null)
-		{
-			this.meta = new HashMap<String, String> ();
-			String [] tokens = meta.split (";");
-			for (String token : tokens)
-			{
-				if (token.length () < 3)
-					continue;
-				String [] kv = token.split (":");
-				if (kv.length != 2 && !kv[0].equals ("nodestats"))
-					continue;
-				
-				if (kv[0].equals ("nodestats"))
-				{
-					this.nodeStats = new HashMap<String, Integer> ();
-					if (kv.length > 2)
-						for (int i = 2; i < kv.length; i++)
-							kv[1] += kv[i];
-					String [] stats = kv[1].substring (1, kv[1].length () - 1).split (",");
-					for (String stat : stats)
-					{
-						if (stat.length () < 3)
-							continue;
-						String [] kv2 = stat.split ("=");
-						if (kv2.length != 2)
-							continue;
-						this.nodeStats.put (kv2[0].trim (), Integer.parseInt (kv2[1].trim ()));
-					}
-				}
-				else
-					this.meta.put (kv[0], kv[1]);
-			}
-			bivesResults.remove (COMMAND_META);
-		}
-		
-		String docTypes = bivesResults.get (COMMAND_DOCUMENT_TYPE);
-		if (docTypes != null)
-		{
-			this.documentTypes = new ArrayList<String> ();
-			
-			String [] dT = docTypes.split (",");
-			for (String dt : dT)
-				if (dt.length () > 0)
-					this.documentTypes.add (dt);
-			
-			bivesResults.remove (COMMAND_DOCUMENT_TYPE);
-		}
-		
+		// nothing special to do
 	}
 	
 }
